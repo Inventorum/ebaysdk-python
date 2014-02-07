@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, unicode_literals
 
 '''
 © 2012-2013 eBay Software Foundation
@@ -12,6 +13,7 @@ from ebaysdk import log
 from ebaysdk.connection import BaseConnection
 from ebaysdk.config import Config
 from ebaysdk.utils import getNodeText, to_xml
+
 
 class Connection(BaseConnection):
     """Trading API class

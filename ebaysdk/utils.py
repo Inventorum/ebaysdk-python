@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import, unicode_literals
 
 '''
 © 2012-2013 eBay Software Foundation
@@ -388,7 +389,7 @@ def _convert_dict_to_xml_recurse(parent, dictitem, listnames):
                 parent.append(elem)
                 _convert_dict_to_xml_recurse(elem, child, listnames)
     elif not dictitem is None:
-        parent.text = str(dictitem)
+        parent.text = unicode(dictitem)
 
 
 def dict2et(xmldict, roottag='data', listnames=None):
