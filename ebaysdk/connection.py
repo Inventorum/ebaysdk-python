@@ -114,6 +114,7 @@ class BaseConnection(object):
 
         self._reset()
         self.build_request(verb, data)
+        self.request.body = self.request.body.encode('utf-8')
         self.execute_request()        
 
         if self.response:

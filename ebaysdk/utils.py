@@ -471,7 +471,7 @@ def dict2xml(datadict, roottag='', listnames=None, pretty=False):
     See also dict2et()
     """
     root = dict2et(datadict, roottag, listnames)
-    xml = to_string(root, pretty=pretty).decode('ascii', 'ignore')
+    xml = to_string(root, pretty=pretty).decode('utf-8')
     xml = xml.replace('<>', '').replace('</>','')
     return xml
 
