@@ -114,8 +114,7 @@ class BaseConnection(object):
 
         self._reset()
         self.build_request(verb, data)
-        self.request.body = self.request.body.encode('utf-8')
-        self.execute_request()        
+        self.execute_request()
 
         if self.response:
             self.process_response()
@@ -147,13 +146,14 @@ class BaseConnection(object):
         )
 
         self.request = request.prepare()
+        self.request.body = self.request.body.encode('unicode_escape')
 
     def execute_request(self):
 
-        log.debug("REQUEST (%s): %s %s" \
-            % (self._request_id, self.request.method, self.request.url))
-        log.debug('headers=%s' % self.request.headers)
-        log.debug('body=%s' % self.request.body)
+        log.debug(u"REQUEST (%s): %s %s",
+            self._request_id, self.request.method, self.request.url)
+        log.debug(u'headers=%s', self.request.headers)
+        log.debug(u'body=%s', self.request.body)
 
         if self.parallel:
             self.parallel._add_request(self)
@@ -171,16 +171,19 @@ class BaseConnection(object):
         log.debug('status code=%s' % self.response.status_code)
         log.debug('headers=%s' % self.response.headers)
         log.debug('content=%s' % self.response.text)      
-    
+
     def process_response(self):
         """Post processing of the response"""
-        
+
         if self.response.status_code != 200:
             self._response_error = self.response.reason
 
+        resp = self.response.content.decode('utf-8')
+
         # remove xml namespace
         regex = re.compile('xmlns="[^"]+"')
-        self._response_content = regex.sub('', self.response.content)
+        stripped = regex.sub('', resp)
+        self._response_content = stripped.encode('utf-8')
 
     def error_check(self):
         estr = self.error()

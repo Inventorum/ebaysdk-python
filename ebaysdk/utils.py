@@ -471,7 +471,7 @@ def dict2xml(datadict, roottag='', listnames=None, pretty=False):
     See also dict2et()
     """
     root = dict2et(datadict, roottag, listnames)
-    xml = to_string(root, pretty=pretty).decode('utf-8')
+    xml = to_string(root, pretty=pretty)
     xml = xml.replace('<>', '').replace('</>','')
     return xml
 
@@ -500,7 +500,7 @@ def to_string(root, pretty=False):
         fileobj.write('\n')
 
     tree.write(fileobj, 'utf-8')
-    return fileobj.getvalue()
+    return fileobj.getvalue().decode('utf-8')
 
 
 # From http://effbot.org/zone/element-lib.htm
