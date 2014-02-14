@@ -162,7 +162,7 @@ class xml2dict(object):
 
     def fromstring(self, s):
         """parse a string"""
-        t = ET.fromstring(s)
+        t = ET.fromstring(s.encode('utf-8'))
         root_tag, root_tree = self._namespace_split(t.tag, self._parse_node(t))
         return object_dict({root_tag: root_tree})
 
