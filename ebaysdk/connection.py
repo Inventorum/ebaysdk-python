@@ -125,7 +125,11 @@ class BaseConnection(object):
         return self
 
     def build_request(self, verb, data):
- 
+        """
+        IMPORTANT: to support unicode ensure that all variables included in
+        request message are byte string
+        """
+        verb = str(verb)
         self.verb = verb
         self._request_id = uuid.uuid4()
 
@@ -141,7 +145,11 @@ class BaseConnection(object):
 
         request_data = self.build_request_data(verb, data)
 
-        request = Request(self.method, 
+        for k, v in headers.items():
+            if isinstance(v, unicode):
+                headers[k] = v.encode('utf-8')  # get a byte string out of an unicode string
+
+        request = Request(str(self.method),
             url,
             data=request_data.encode('utf-8'),
             headers=headers,
