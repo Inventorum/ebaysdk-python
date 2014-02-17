@@ -139,14 +139,15 @@ class BaseConnection(object):
         headers.update({'User-Agent': UserAgent, 
                         'X-EBAY-SDK-REQUEST-ID': str(self._request_id)})
 
+        request_data = self.build_request_data(verb, data)
+
         request = Request(self.method, 
             url,
-            data=self.build_request_data(verb, data),
+            data=request_data.encode('utf-8'),
             headers=headers,
         )
 
         self.request = request.prepare()
-        self.request.body = self.request.body.encode('unicode_escape')
 
     def execute_request(self):
 
