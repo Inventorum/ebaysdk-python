@@ -196,7 +196,8 @@ class Connection(BaseConnection):
 
         if self.response_dict().Ack == 'Failure':
             if self.config.get('errors'):
-                log.error("%s: %s\n\n" % (self.verb, "\n".join(errors)))
+                log.error("%s: %s \n\n body \n\n %s \n\n headers \n\n %s" % (self.verb, " \n".join(errors),
+                                                                     self.request.body, self.request.headers))
             
             return errors
 
