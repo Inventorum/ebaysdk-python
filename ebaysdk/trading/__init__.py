@@ -199,7 +199,7 @@ class Connection(BaseConnection):
                 log.error("%s: %s \n\n body \n\n %s \n\n headers \n\n %s" %
                         (
                             self.verb, " \n".join(errors),
-                            self.request.body.encode('utf-8'),
+                            self.request.body.decode('utf-8'),
                             self.request.headers
                             ))
             
