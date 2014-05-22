@@ -194,7 +194,9 @@ class Connection(BaseConnection):
         if self.config.get('warnings') and len(warnings) > 0:
             log.warn("%s: %s\n\n" % (self.verb, "\n".join(warnings)))
 
-        if self.response_dict().Ack == 'Failure':
+        response_dict = self.response_dict()
+        ack = getattr(response_dict, 'Ack', None)
+        if ack == None or ack == 'Failure':
             if self.config.get('errors'):
                 log.error("%s: %s \n\n body \n\n %s \n\n headers \n\n %s" %
                         (
